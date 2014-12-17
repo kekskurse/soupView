@@ -10,7 +10,6 @@
 	.soupimg
 	{
 		height:100%;
-		width:90%;
 	}
 	.controll
 	{
@@ -51,7 +50,7 @@ function loadImages()
 			}
 		});
 		//console.log(img);
-		changeImage("next");
+		changeImage("next", true);
 	});
 }
 function inArray(needle, haystack) {
@@ -61,7 +60,7 @@ function inArray(needle, haystack) {
     }
     return false;
 }
-function changeImage(task)
+function changeImage(task, timeoutset)
 {
 	//$("#imgDIV").fadeOut().html('<img class="soupimg" src="'+img[count]+'">').fadeIn();
 	if(count > img.length - 4)
@@ -84,15 +83,18 @@ function changeImage(task)
 	$("#imgDIV").fadeOut(4000, function () {
 		$("#imgDIV").html('<img class="soupimg" src="'+img[count]+'">');
 		$("#imgDIV").fadeIn(4000, function () {
-			setTimeout("changeImage('next')", 15000);
+			if(timeoutset==true)
+			{
+				setTimeout("changeImage('next')", 15000);
+			}
 		});
 	});
 }
 $(".next").click(function() {
-	changeImage("next");
+	changeImage("next", false);
 });
 $(".previous").click(function () {
-	changeImage("previous");
+	changeImage("previous", false);
 });
 loadImages();
 </script>
