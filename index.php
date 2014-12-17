@@ -27,11 +27,25 @@
 		left:10px;
 		top:50%;
 	}
+	#msg
+	{
+		position:absolute;
+		color:#fff;
+		font-size:26px;
+		padding:10px;
+		text-align: center;
+		left:5%;
+		right:5%;
+		top:40%;
+		background-color: red;
+		opacity: 0.7;
+	}
 	</style>
 <body>
 	<div style="text-align: center;position:absolute;width:100%;height:90%;top:5%;" id="imgDIV">
 		<i>Loading</i>
 	</div>
+	<div id="msg"></div>
 	<div class="next controll"><h1>></h1></div>
 	<div class="previous controll"><h1><</h1></div>
 </body>
@@ -85,16 +99,40 @@ function changeImage(task, timeoutset)
 		$("#imgDIV").fadeIn(4000, function () {
 			if(timeoutset==true)
 			{
-				setTimeout("changeImage('next')", 15000);
+				setTimeout("changeImage('next', true)", 15000);
 			}
 		});
 	});
 }
+function getMessage ()
+{
+	if ($("#msg").is(':visible')) {
+		//alert("VISIBLE");
+	}
+	else
+	{
+		$.ajax({
+		  url: "msg.php",
+		}).done(function(res) {
+		  if(res!="")
+		  {
+		  	$("#msg").html(res);
+		  	$("#msg").fadeIn();
+		  }
+		});
+	}
+	setTimeout("getMessage()", 3000);
+}
+$("#msg").hide();
+getMessage();
 $(".next").click(function() {
 	changeImage("next", false);
 });
 $(".previous").click(function () {
 	changeImage("previous", false);
+});
+$("#msg").click(function () {
+	$("#msg").fadeOut();
 });
 loadImages();
 </script>
